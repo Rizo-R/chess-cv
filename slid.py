@@ -1,8 +1,14 @@
+# My implementation of the SLID module from
+# https://github.com/maciejczyzewski/neural-chessboard/
+
 import numpy as np
 import cv2
 
 
 arr = np.array
+# Four parameters are taken from the original code and
+# correspond to four possible cases that need correction:
+# low light, overexposure, underexposure, and blur
 CLAHE_PARAMS = [[3,   (2, 6),    5],  # @1
                 [3,   (6, 2),    5],  # @2
                 [5,   (3, 3),    5],  # @3
@@ -131,7 +137,6 @@ def SLID(img, segments):
         points = []
         for idx in group:
             points += generate_line(*hashmap[idx], 10)
-            print(idx)
         _, radius = cv2.minEnclosingCircle(arr(points))
         w = radius * np.pi / 2
         vx, vy, cx, cy = cv2.fitLine(arr(points), cv2.DIST_L2, 0, 0.01, 0.01)
@@ -177,3 +182,22 @@ def SLID(img, segments):
         raw_lines += [analyze(group[h])]
 
     return raw_lines
+
+
+def slid_tendency(raw_lines, s=4):
+    lines = []
+    def scale(x, y, s): return int(x * (1+s)/2 + y * (1-s)/2)
+    for a, b in raw_lines:
+        a[0] = scale(a[0], b[0], s)
+        a[1] = scale(a[1], b[1], s)
+        b[0] = scale(b[0], a[0], s)
+        b[1] = scale(b[1], a[1], s)
+        lines += [[a, b]]
+    return lines
+
+
+def detect_lines(img):
+    segments = pSLID(img)
+    raw_lines = SLID(img, segments)
+    lines = slid_tendency(raw_lines)
+    return lines
