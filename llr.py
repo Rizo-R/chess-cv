@@ -141,7 +141,7 @@ def llr_polyscore(cnt, pts, cen, alfa=5, beta=2):
     D = 1+(G/A)**(1/5)
     R = (A**4)/((B**2) * C * D)
 
-    print(R*(10**12), A, "|", B, C, D, "|", E, G)
+    # print(R*(10**12), A, "|", B, C, D, "|", E, G)
 
     return R
 
@@ -194,7 +194,7 @@ def LLR(img, points, lines):
             __points_max = __points[i]
     if len(__points) > 0 and len(points) > 49/2:
         points = __points_max
-    print(X.labels_)
+    # print(X.labels_)
 
     ring = __convex_approx(llr_polysort(points))
 
@@ -207,7 +207,7 @@ def LLR(img, points, lines):
     centroid = (sum(x) / len(points),
                 sum(y) / len(points))
 
-    print(alfa, beta, centroid)
+    # print(alfa, beta, centroid)
 
     def __v(l):
         y_0, x_0 = l[0][0], l[0][1]
@@ -269,7 +269,8 @@ def LLR(img, points, lines):
     pregroup[0] = llr_unique(pregroup[0])
     pregroup[1] = llr_unique(pregroup[1])
 
-    print("---------------------")
+    # print("---------------------")
+    # print(pregroup)
     for v in itertools.combinations(pregroup[0], 2):
         for h in itertools.combinations(pregroup[1], 2):
             poly = laps_intersections([v[0], v[1], h[0], h[1]])
@@ -279,12 +280,15 @@ def LLR(img, points, lines):
             poly = na(llr_polysort(llr_normalize(poly)))
             if not cv2.isContourConvex(poly):
                 continue
+            # print("Poly:", -llr_polyscore(poly, points, centroid,
+            #                               beta=beta, alfa=alfa/2))
             S[-llr_polyscore(poly, points, centroid,
                              beta=beta, alfa=alfa/2)] = poly
 
+    # print(bool(S))
     S = collections.OrderedDict(sorted(S.items()))
     K = next(iter(S))
-    print("key --", K)
+    # print("key --", K)
     four_points = llr_normalize(S[K])
 
     print("POINTS:", len(points))

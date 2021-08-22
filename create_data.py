@@ -36,7 +36,8 @@ def canny_edge(img, sigma=0.33):
 
 # Hough line detection
 def hough_line(edges, min_line_length=100, max_line_gap=10):
-    lines = cv2.HoughLines(edges, 1, np.pi / 180, 125, min_line_length, max_line_gap)
+    lines = cv2.HoughLines(edges, 1, np.pi / 180, 125,
+                           min_line_length, max_line_gap)
     lines = np.reshape(lines, (-1, 2))
     return lines
 
@@ -57,7 +58,8 @@ def line_intersections(h_lines, v_lines):
     points = []
     for r_h, t_h in h_lines:
         for r_v, t_v in v_lines:
-            a = np.array([[np.cos(t_h), np.sin(t_h)], [np.cos(t_v), np.sin(t_v)]])
+            a = np.array([[np.cos(t_h), np.sin(t_h)],
+                          [np.cos(t_v), np.sin(t_v)]])
             b = np.array([r_h, r_v])
             inter_point = np.linalg.solve(a, b)
             points.append(inter_point)
@@ -73,7 +75,8 @@ def cluster_points(points):
     for i in range(len(flat_clusters)):
         cluster_dict[flat_clusters[i]].append(points[i])
     cluster_values = cluster_dict.values()
-    clusters = map(lambda arr: (np.mean(np.array(arr)[:, 0]), np.mean(np.array(arr)[:, 1])), cluster_values)
+    clusters = map(lambda arr: (np.mean(np.array(arr)[:, 0]), np.mean(
+        np.array(arr)[:, 1])), cluster_values)
     return sorted(list(clusters), key=lambda k: [k[1], k[0]])
 
 
@@ -115,14 +118,14 @@ def write_crop_images(img, points, img_count, folder_path='./raw_data/'):
         end = (start_point - 8) - (row * 11)
         num_list.append(range(start, end, -1))
 
-
     for row in num_list:
         for s in row:
             # ratio_h = 2
             # ratio_w = 1
             base_len = math.dist(points[s], points[s + 1])
             bot_left, bot_right = points[s], points[s + 1]
-            start_x, start_y = int(bot_left[0]), int(bot_left[1] - (base_len * 2))
+            start_x, start_y = int(bot_left[0]), int(
+                bot_left[1] - (base_len * 2))
             end_x, end_y = int(bot_right[0]), int(bot_right[1])
             if start_y < 0:
                 start_y = 0
@@ -131,7 +134,8 @@ def write_crop_images(img, points, img_count, folder_path='./raw_data/'):
             cropped = img[start_y: end_y, start_x: end_x]
             print(cropped.shape)
             img_count += 1
-            cv2.imwrite('./raw_data/alpha_data_image' + str(img_count) + '.jpeg', cropped)
+            cv2.imwrite('./raw_data/alpha_data_image' +
+                        str(img_count) + '.jpeg', cropped)
             # print(folder_path + 'data' + str(img_count) + '.jpeg')
     return img_count
 
@@ -153,7 +157,11 @@ for file_name in img_filename_list:
     print(np.shape(gray_blur))
     edges = canny_edge(gray_blur)
     print('edges: ' + str(np.shape(edges)))
-    lines = hough_line(edges)
+    try:
+        lines = hough_line(edges)
+    except:
+        print("Skipped")
+        continue
     print('line: ' + str(np.shape(lines)))
     h_lines, v_lines = h_v_lines(lines)
     if len(h_lines) < 11 or len(v_lines) < 11:

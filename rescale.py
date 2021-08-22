@@ -39,3 +39,10 @@ def image_transform(img, points, square_length=150):
     M = cv2.getPerspectiveTransform(pts1, pts2)
     W = cv2.warpPerspective(img, M, (board_length, board_length))
     return W
+
+
+def crop(img, pts, scale):
+    """crop using 4 points transform"""
+    pts_orig = image_scale(pts, scale)
+    img_crop = image_transform(img, pts_orig)
+    return img_crop

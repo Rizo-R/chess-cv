@@ -1,6 +1,7 @@
 # My implementation of the SLID module from
 # https://github.com/maciejczyzewski/neural-chessboard/
 
+from typing import Tuple
 import numpy as np
 import cv2
 
@@ -58,7 +59,7 @@ def pSLID(img, thresh=150):
         curr_segments = list(slid_detector(slid_canny(tmp), thresh))
         segments += curr_segments
         i += 1
-        print("FILTER: {} {} : {}".format(i, arr, len(curr_segments)))
+        # print("FILTER: {} {} : {}".format(i, arr, len(curr_segments)))
     return segments
 
 
@@ -110,7 +111,13 @@ def SLID(img, segments):
         y1 = height(l1, l2[0])
         y2 = height(l1, l2[1])
 
+        if x1 < 1e-8 and x2 < 1e-8 and y1 < 1e-8 and y2 < 1e-8:
+            return True
+
+        # print("l1: %s, l2: %s" % (str(l1), str(l2)))
+        # print("x1: %f, x2: %f, y1: %f, y2: %f" % (x1, x2, y1, y2))
         gamma = 0.25 * (x1+x2+y1+y2)
+        # print("gamma:", gamma)
 
         img_width = 500
         img_height = 282
@@ -119,6 +126,7 @@ def SLID(img, segments):
         w = np.pi/2 / np.sqrt(np.sqrt(A))
         t_delta = p*w
         t_delta = 0.0625
+        # t_delta = 0.05
 
         delta = (a+b) * t_delta
 
