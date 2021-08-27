@@ -113,4 +113,4 @@ if __name__ == '__main__':
         validation_steps=800 // batch_size,
         callbacks=[mc])
     # always save your weights after training or during training
-    model.save_weights('first_try.h5')asd
+    model.save_weights('first_try.h5')
