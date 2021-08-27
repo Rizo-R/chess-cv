@@ -291,8 +291,8 @@ def LLR(img, points, lines):
     # print("key --", K)
     four_points = llr_normalize(S[K])
 
-    print("POINTS:", len(points))
-    print("LINES:", len(lines))
+    # print("POINTS:", len(points))
+    # print("LINES:", len(lines))
 
     return four_points
 
