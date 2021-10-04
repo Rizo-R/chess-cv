@@ -22,7 +22,6 @@ from preprocess import preprocess_image
 from train import create_model
 from wand.api import library
 
-# IMAGE_PATH = './Ex1.jpg'
 PIECES = ['Empty', 'Rook_White', 'Rook_Black', 'Knight_White', 'Knight_Black', 'Bishop_White',
           'Bishop_Black', 'Queen_White', 'Queen_Black', 'King_White', 'King_Black', 'Pawn_White', 'Pawn_Black']
 # PIECES = ['Empty','Rook','Knight','Bishop','Queen','King','Pawn']
