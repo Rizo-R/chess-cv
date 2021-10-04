@@ -10,8 +10,8 @@ import scipy
 import scipy.cluster
 from keras.models import model_from_json
 
-model_path = "data/models/laps.model.json"
-weights_path = "data/models/laps.weights.h5"
+model_path = "data/laps_models/laps.model.json"
+weights_path = "data/laps_models/laps.weights.h5"
 NEURAL_MODEL = model_from_json(open(model_path, 'r').read())
 NEURAL_MODEL.load_weights(weights_path)
 
