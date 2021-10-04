@@ -9,14 +9,6 @@ import chess.pgn
 import cv2
 import numpy as np
 
-# from slid import detect_lines
-
-# import pip
-# pip.main(['uninstall','opencv-python'])
-# pip.main(['uninstall','opencv-contrib-python'])
-# pip.main(['install','opencv-contrib-python'])
-# pip.main(['install','opencv-python'])
-
 LABELS = {
     'p': 'Pawn',
     'r': 'Rook',

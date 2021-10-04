@@ -30,7 +30,7 @@ def split_data():
                 data_type = 'validation'
             else:
                 data_type = 'test'
-            path = 'data/CNN/%s/%s/' % (data_type, label)
+            path = DATA_FOLDER + '%s/%s/' % (data_type, label)
             # Make a directory if it doesn't exist
             Path(path).mkdir(parents=True, exist_ok=True)
             copy(dirpath+'/'+filename, path)
