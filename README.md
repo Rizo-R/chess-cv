@@ -54,17 +54,17 @@ The project comes with 3 examples marked `Ex1.jpg`, `Ex2.jpg`, and `Ex3.jpg`, ch
 
 ## Features
 * Unlike many other projects, this project does not try to contextualize the position (e.g. by using a chess engine to calculate probability of a given position or by keeping history of previous positions), which means there is no guessing involved, only classification; it can also identify positions that are technically illegal/impossible to get in a real game (like `Ex3.jpg`)
-* This project does not assume Pawns always promoting to Queens, which might be crucial in situations like the Saavedra position (where promoting to a Queen leads to draw whereas underpromoting to a Rook leads to victory) or the game between Runau and Schmidt in 1972 (where underpromoting to a Knight allowed Runau to checkmate his opponent)
+* This project does not assume Pawns always promoting to Queens, which might be crucial in situations like the Saavedra position (where promoting to Queen leads to draw whereas underpromoting to Rook leads to victory) or the game between Runau and Schmidt in 1972 (where underpromoting to Knight allowed Runau to checkmate his opponent)
 
 
 ## Disadvantages
 * Because of the way 2D-projection is done, the top half of pieces that are on the 8th rank is often cropped out making it much harder to classify them correctly, so this tool works better with pieces in the center or on the other side of the board
-* Sometimes the tool doesn't correctly identify a piece that is obstructed by another piece, or it mistakenly takes the top half of another square as a separate piece and gives a false positive
-* In the chess set we used, King and Queen are hard to distinguish even by eye, and our tool seems to often mix up these two; because of this, we implemented the algorithm where, if we did not find a King of either color on the board, we look for a Queen and replace it with a King in our prediction; this way of dealing with a problem has disadvantages (e.g. what if there are 2 or more Queens classified? what if no Queens were found but the missing King was classified as a Rook?) but it works in some situations, especially when there aren't many pieces left on the board
+* Sometimes the tool doesn't correctly identify a piece that is obstructed by another piece, or it mistaks the top half of another square for a separate piece and gives a false positive
+* In the chess set we used, King and Queen are hard to distinguish even by eye, and our tool seems to often mix up these two; because of this, we implemented the algorithm where, if we did not find a King of a certain color on the board, we look for a same-colored Queen and replace it with King in our prediction; this way of dealing with a problem has disadvantages (e.g. what if there are 2 or more Queens classified? what if no Queens were found but the missing King was classified as a Rook?) but it works in some situations, especially when there aren't many pieces left on the board
 * This tool works better when there are fewer pieces on the board
 
 ## Possible Improvements
-* We could possibly try out different architectures to achieve better accuracy (we tried VGG and ResNet50 but they didn't work well with our data), especially between King and Queen
+* We could possibly try out different architectures to achieve better accuracy (we tried VGG19 and ResNet50 but they didn't work well with our data, at least with computational resources we had), especially between King and Queen
 * Because the method we use crops out the top half of pieces on the 8th rank, we could modify the cropping method to preserve the information about these pieces to make their classification more accurate
 * We could potentially preprocess each square so that we first ignore the color of the piece and classify the piece and only then find its color (where we could use the fact that we always know the color of each square)
 
