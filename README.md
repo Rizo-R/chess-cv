@@ -22,14 +22,14 @@ Finally, once we have our CNN trained, we write code to automate all previous st
 
 ## Requirements
 The following modules must be installed to use this project:
-`pip install keras`
-`pip install -U matplotlib`
-`pip install numpy`
-`pip install opencv-contrib-python`
-`pip install chess`
-`pip install scipy`
-`pip install tensorflow`
-`pip install wand`
+`pip install keras`  
+`pip install -U matplotlib`  
+`pip install numpy`  
+`pip install opencv-contrib-python`  
+`pip install chess`  
+`pip install scipy`  
+`pip install tensorflow`  
+`pip install wand`  
 
 Note: Make sure to use the given command to install OpenCV (not just `pip install opencv-python`), otherwise some features might not work.
 
