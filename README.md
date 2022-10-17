@@ -21,15 +21,15 @@ The model is trained for 10 epochs with a batch size of 16 samples. We then take
 Finally, once we have our CNN trained, we write code to automate all previous steps (2D-projection -> Splitting into 64 squares -> Classifying each square -> Putting every predicted square together) to obtain an array representing a predicted board position, and do additional processing (Numpy array -> FEN string -> SVG file -> PNG file) to produce the final result, which we then save in the `results` folder.
 
 ## Requirements
-The following modules must be installed to use this project:
-`pip install keras`  
-`pip install -U matplotlib`  
-`pip install numpy`  
-`pip install opencv-contrib-python`  
-`pip install chess`  
-`pip install scipy`  
-`pip install tensorflow`  
-`pip install wand`  
+The following modules must be installed to use this project:  
+`pip install keras  
+pip install -U matplotlib  
+pip install numpy  
+pip install opencv-contrib-python  
+pip install chess  
+pip install scipy  
+pip install tensorflow  
+pip install wand`  
 
 Note: Make sure to use the given command to install OpenCV (not just `pip install opencv-python`), otherwise some features might not work.
 
